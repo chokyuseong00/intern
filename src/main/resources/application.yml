@@ -1,3 +1,10 @@
 spring:
   application:
     name: user
+  config:
+    import:
+      - optional:file:.env[.properties]
+      - classpath:properties/jpa.yml
+      - classpath:properties/datasource.yml
+  profiles:
+    active: local

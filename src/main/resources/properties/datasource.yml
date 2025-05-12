@@ -1,0 +1,21 @@
+spring:
+  config:
+    activate:
+      on-profile: local
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    username: ${POSTGRES_USER}
+    password: ${POSTGRES_PASSWORD}
+    url: ${POSTGRES_URL}
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: test
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    username: ${TEST_POSTGRES_USER}
+    password: ${TEST_POSTGRES_PASSWORD}
+    url: ${TEST_POSTGRES_URL}
