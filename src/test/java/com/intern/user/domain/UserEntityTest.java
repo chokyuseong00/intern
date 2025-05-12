@@ -17,8 +17,9 @@ public class UserEntityTest {
     void userOfTest() {
         String username = "testUser";
         String password = "testPassword";
+        String nickname = "testNickname";
 
-        User user = User.of(username, password);
+        User user = User.of(username, password, nickname);
 
         assertEquals(username, user.getUsername());
         assertEquals(password, user.getPassword());

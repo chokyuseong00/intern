@@ -26,25 +26,32 @@ public class User {
     @Column(name = "password", nullable = false)
     private String password;
 
+    @Column(name = "nickname", nullable = false)
+    private String nickname;
+
     @Column(name = "role", nullable = false)
     private UserRole role;
 
     private User(
         String username,
-        String password
+        String password,
+        String nickname
     ) {
         this.username = username;
         this.password = password;
+        this.nickname = nickname;
         this.role = UserRole.USER;
     }
 
     public static User of(
         String username,
-        String password
+        String password,
+        String nickname
     ) {
         return new User(
             username,
-            password
+            password,
+            nickname
         );
     }
 
