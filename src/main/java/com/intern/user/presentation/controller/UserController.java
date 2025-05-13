@@ -1,6 +1,8 @@
 package com.intern.user.presentation.controller;
 
+import com.intern.user.application.dto.reqeust.UserLoginRequestDto;
 import com.intern.user.application.dto.reqeust.UserSignupRequestDto;
+import com.intern.user.application.dto.response.UserLoginResponseDto;
 import com.intern.user.application.dto.response.UserSignupResponseDto;
 import com.intern.user.application.service.UserService;
 import java.net.URI;
@@ -29,5 +31,13 @@ public class UserController {
             .build()
             .toUri();
         return ResponseEntity.created(uri).body(responseDto);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<UserLoginResponseDto> loginUser(
+        @RequestBody UserLoginRequestDto requestDto
+    ) {
+        UserLoginResponseDto responseDto = userService.loginUser(requestDto);
+        return ResponseEntity.ok(responseDto);
     }
 }
