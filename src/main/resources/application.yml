@@ -6,5 +6,6 @@ spring:
       - optional:file:.env[.properties]
       - classpath:properties/jpa.yml
       - classpath:properties/datasource.yml
+      - classpath:properties/jwt.yml
   profiles:
     active: local
