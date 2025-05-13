@@ -2,8 +2,8 @@ package com.intern.user.domain;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import com.intern.user.domain.model.User;
-import com.intern.user.domain.model.UserRole;
+import com.intern.user.users.domain.model.User;
+import com.intern.user.users.domain.model.UserRole;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.test.context.ActiveProfiles;
