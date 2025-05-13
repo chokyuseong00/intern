@@ -20,11 +20,12 @@ public class CustomAccessHandler implements AccessDeniedHandler {
         AccessDeniedException accessDeniedException
     ) throws IOException {
         response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+        response.setCharacterEncoding("UTF-8");
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         ErrorResponse body = new ErrorResponse(
             new ErrorResponse.Error(
                 "ACCESS_DENIED",
-                "관리자 권한이 필요한 요청입니다. 접근 권한이 없습니다."
+                "접근 권한이 없습니다."
             )
         );
         mapper.writeValue(response.getWriter(), body);
