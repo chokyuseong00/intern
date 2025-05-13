@@ -58,4 +58,9 @@ public class User {
         );
     }
 
+    public void updateRole(
+        UserRole role
+    ) {
+        this.role = role;
+    }
 }
