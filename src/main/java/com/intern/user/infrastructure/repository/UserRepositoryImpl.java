@@ -29,4 +29,10 @@ public class UserRepositoryImpl implements UserRepository {
         return jpaUserRepository.findByUsername(username)
             .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
     }
+
+    @Override
+    public User findById(Long userId) {
+        return jpaUserRepository.findById(userId)
+            .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
+    }
 }
