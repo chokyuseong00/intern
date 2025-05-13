@@ -1,6 +1,7 @@
 package com.intern.user.application.mapper;
 
 import com.intern.user.application.dto.reqeust.UserSignupRequestDto;
+import com.intern.user.application.dto.response.UserLoginResponseDto;
 import com.intern.user.application.dto.response.UserSignupResponseDto;
 import com.intern.user.domain.model.User;
 import com.intern.user.infrastructure.password.PasswordUtil;
@@ -16,4 +17,7 @@ public class UserMapper {
         return UserSignupResponseDto.of(user.getUsername(), user.getNickname(), user.getRole());
     }
 
+    public static UserLoginResponseDto toLoginResDto(String token) {
+        return UserLoginResponseDto.of(token);
+    }
 }
