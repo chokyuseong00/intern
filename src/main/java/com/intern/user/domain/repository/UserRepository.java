@@ -9,4 +9,6 @@ public interface UserRepository {
     boolean existsByUsername(String username);
 
     User findByUsername(String username);
+
+    User findById(Long userId);
 }
