@@ -5,7 +5,25 @@ import lombok.Getter;
 @Getter
 public class UserLoginRequestDto {
 
-    private String username;
-    private String password;
+    private final String username;
+    private final String password;
+
+    private UserLoginRequestDto(
+        String username,
+        String password
+    ) {
+        this.username = username;
+        this.password = password;
+    }
+
+    public static UserLoginRequestDto of(
+        String username,
+        String password
+    ) {
+        return new UserLoginRequestDto(
+            username,
+            password
+        );
+    }
 
 }
