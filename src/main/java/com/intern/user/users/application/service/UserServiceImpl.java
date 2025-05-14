@@ -26,6 +26,7 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final UserValidator userValidator;
     private final JwtService jwtService;
+    private final AdminValidator adminValidator;
 
     @Override
     @Transactional
@@ -56,7 +57,7 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public AdminSignupResponseDto signupAdmin(AdminSignupRequestDto requestDto) {
         userValidator.usernameValidate(requestDto.getUsername());
-        AdminValidator.checkPin(requestDto.getAdminPin());
+        adminValidator.checkPin(requestDto.getAdminPin());
         User admin = UserMapper.toAdmin(requestDto);
         admin.updateRole(UserRole.ADMIN);
         userRepository.save(admin);

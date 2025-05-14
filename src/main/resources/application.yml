@@ -7,5 +7,6 @@ spring:
       - classpath:properties/jpa.yml
       - classpath:properties/datasource.yml
       - classpath:properties/jwt.yml
+      - classpath:properties/admin.yml
   profiles:
     active: local

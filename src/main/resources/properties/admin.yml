@@ -1,0 +1,2 @@
+admin:
+  pin: ${ADMIN_PIN}
