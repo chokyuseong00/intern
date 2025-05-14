@@ -13,7 +13,6 @@ import com.intern.user.users.application.validator.AdminValidator;
 import com.intern.user.users.domain.model.User;
 import com.intern.user.users.domain.model.UserRole;
 import com.intern.user.users.domain.repository.UserRepository;
-import com.intern.user.users.domain.validator.UserRoleValidator;
 import com.intern.user.users.domain.validator.UserValidator;
 import com.intern.user.users.infrastructure.password.PasswordUtil;
 import lombok.RequiredArgsConstructor;
@@ -47,8 +46,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public AdminRoleUpdateResponseDto updateRole(Long userId, UserRole role) {
-        UserRoleValidator.checkAdmin(role);
+    public AdminRoleUpdateResponseDto updateRole(Long userId) {
         User user = userRepository.findById(userId);
         user.updateRole(UserRole.ADMIN);
         return UserMapper.toUpdateRoleResDto(user);
@@ -60,6 +58,7 @@ public class UserServiceImpl implements UserService {
         userValidator.usernameValidate(requestDto.getUsername());
         AdminValidator.checkPin(requestDto.getAdminPin());
         User admin = UserMapper.toAdmin(requestDto);
+        admin.updateRole(UserRole.ADMIN);
         userRepository.save(admin);
         return UserMapper.toSignupAdminResDto(admin);
     }
