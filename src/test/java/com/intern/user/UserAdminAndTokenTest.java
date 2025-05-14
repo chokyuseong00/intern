@@ -217,9 +217,9 @@ public class UserAdminAndTokenTest {
         );
 
         resultActions.andDo(print())
-            .andExpect(status().isUnauthorized())
-            .andExpect(jsonPath("error.code").value("UNAUTHORIZED_ACCESS"))
-            .andExpect(jsonPath("error.message").value("권한이 없습니다."));
+            .andExpect(status().isForbidden())
+            .andExpect(jsonPath("error.code").value("ACCESS_DENIED"))
+            .andExpect(jsonPath("error.message").value("접근 권한이 없습니다."));
     }
 
     @Test
