@@ -1,7 +1,9 @@
 package com.intern.user.users.application.mapper;
 
+import com.intern.user.users.application.dto.reqeust.AdminSignupRequestDto;
 import com.intern.user.users.application.dto.reqeust.UserSignupRequestDto;
 import com.intern.user.users.application.dto.response.AdminRoleUpdateResponseDto;
+import com.intern.user.users.application.dto.response.AdminSignupResponseDto;
 import com.intern.user.users.application.dto.response.UserLoginResponseDto;
 import com.intern.user.users.application.dto.response.UserSignupResponseDto;
 import com.intern.user.users.domain.model.User;
@@ -27,4 +29,12 @@ public class UserMapper {
             user.getRole());
     }
 
+    public static User toAdmin(AdminSignupRequestDto requestDto) {
+        String encodedPassword = PasswordUtil.encode(requestDto.getPassword());
+        return User.of(requestDto.getUsername(), encodedPassword, requestDto.getNickname());
+    }
+
+    public static AdminSignupResponseDto toSignupAdminResDto(User admin) {
+        return AdminSignupResponseDto.of(admin.getUsername(), admin.getNickname(), admin.getRole());
+    }
 }
