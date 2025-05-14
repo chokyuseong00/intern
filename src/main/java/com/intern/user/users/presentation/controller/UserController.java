@@ -25,7 +25,7 @@ public class UserController {
     ) {
         UserSignupResponseDto responseDto = userService.signupUser(requestDto);
         URI uri = ServletUriComponentsBuilder.fromCurrentContextPath()
-            .path("/api/v1/users/my-page")
+            .path("/users/my-page")
             .build()
             .toUri();
         return ResponseEntity.created(uri).body(responseDto);
