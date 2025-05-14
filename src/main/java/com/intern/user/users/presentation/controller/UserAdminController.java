@@ -16,7 +16,7 @@ public class UserAdminController {
 
     private final UserService userService;
 
-    @PatchMapping("admin/users/{userId}/roles")
+    @PatchMapping("/admin/users/{userId}/roles")
     public ResponseEntity<AdminRoleUpdateResponseDto> updateRole(
         @PathVariable(name = "userId") Long userId,
         @RequestHeader(name = "X-User-Role") UserRole role
