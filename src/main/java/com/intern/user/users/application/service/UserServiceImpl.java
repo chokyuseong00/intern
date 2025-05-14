@@ -1,18 +1,21 @@
 package com.intern.user.users.application.service;
 
+import com.intern.user.security.jwt.JwtService;
+import com.intern.user.users.application.dto.reqeust.AdminSignupRequestDto;
 import com.intern.user.users.application.dto.reqeust.UserLoginRequestDto;
 import com.intern.user.users.application.dto.reqeust.UserSignupRequestDto;
 import com.intern.user.users.application.dto.response.AdminRoleUpdateResponseDto;
+import com.intern.user.users.application.dto.response.AdminSignupResponseDto;
 import com.intern.user.users.application.dto.response.UserLoginResponseDto;
 import com.intern.user.users.application.dto.response.UserSignupResponseDto;
 import com.intern.user.users.application.mapper.UserMapper;
+import com.intern.user.users.application.validator.AdminValidator;
 import com.intern.user.users.domain.model.User;
 import com.intern.user.users.domain.model.UserRole;
 import com.intern.user.users.domain.repository.UserRepository;
 import com.intern.user.users.domain.validator.UserRoleValidator;
 import com.intern.user.users.domain.validator.UserValidator;
 import com.intern.user.users.infrastructure.password.PasswordUtil;
-import com.intern.user.security.jwt.JwtService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -50,5 +53,16 @@ public class UserServiceImpl implements UserService {
         user.updateRole(UserRole.ADMIN);
         return UserMapper.toUpdateRoleResDto(user);
     }
+
+    @Override
+    @Transactional
+    public AdminSignupResponseDto signupAdmin(AdminSignupRequestDto requestDto) {
+        userValidator.usernameValidate(requestDto.getUsername());
+        AdminValidator.checkPin(requestDto.getAdminPin());
+        User admin = UserMapper.toAdmin(requestDto);
+        userRepository.save(admin);
+        return UserMapper.toSignupAdminResDto(admin);
+    }
+
 
 }
