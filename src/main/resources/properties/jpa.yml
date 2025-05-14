@@ -27,3 +27,19 @@ spring:
         show_sql: true
         format_sql: true
         use_sql_comments: true
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: prod
+  jpa:
+    hibernate:
+      ddl-auto: ${PROD_DDL_AUTO}
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+        show_sql: true
+        format_sql: true
+        use_sql_comments: true
