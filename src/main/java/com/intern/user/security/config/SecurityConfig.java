@@ -41,7 +41,8 @@ public class SecurityConfig {
                 authorizeHttpRequests
                     .requestMatchers(
                         "/signup",
-                        "/login"
+                        "/login",
+                        "/admin/users/signup"
                     ).permitAll()
                     .anyRequest().authenticated()
             )
