@@ -1,6 +1,7 @@
 package com.intern.user;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -11,6 +12,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.intern.user.security.jwt.JwtProperties;
 import com.intern.user.security.jwt.JwtService;
+import com.intern.user.users.application.dto.reqeust.AdminSignupRequestDto;
 import com.intern.user.users.application.dto.reqeust.UserLoginRequestDto;
 import com.intern.user.users.domain.model.User;
 import com.intern.user.users.domain.model.UserRole;
@@ -27,6 +29,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpHeaders;
@@ -51,14 +54,14 @@ public class UserAdminAndTokenTest {
     private final MockMvc mockMvc;
     private final ObjectMapper objectMapper;
     private final JwtProperties jwtProperties;
+    @Value("${admin.pin}")
+    private String pin;
     private Long userId;
     private String username;
     private String password;
-
     private Long adminId;
     private String adminName;
     private String adminPassword;
-
     @Autowired
     private UserRepository userRepository;
     @Autowired
@@ -100,6 +103,72 @@ public class UserAdminAndTokenTest {
         adminName = admin.getUsername();
         adminPassword = "testAdmin";
 
+    }
+
+    @Test
+    @DisplayName("관리자 회원가입 테스트 : 성공")
+    void signupAdminTestSuccess() throws Exception {
+        AdminSignupRequestDto requestDto = AdminSignupRequestDto.of(
+            "testAdminUsername",
+            "testAdminPassword",
+            "testAdminNickname",
+            pin
+        );
+
+        ResultActions resultActions = mockMvc.perform(post("/admin/users/signup")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(objectMapper.writeValueAsString(requestDto))
+        );
+
+        resultActions.andDo(print())
+            .andExpect(status().isCreated())
+            .andExpect(jsonPath("username").value(requestDto.getUsername()))
+            .andExpect(jsonPath("nickname").value(requestDto.getNickname()));
+
+        User admin = userRepository.findByUsername(requestDto.getUsername());
+        assertEquals(UserRole.ADMIN, admin.getRole());
+    }
+
+    @Test
+    @DisplayName("관리자 회원가입 테스트 : PIN 번호 불일치 실패")
+    void signupAdminTestFail() throws Exception {
+        AdminSignupRequestDto requestDto = AdminSignupRequestDto.of(
+            "testAdminUsername1",
+            "testAdminPassword",
+            "testAdminNickname",
+            "invalidPin"
+        );
+
+        ResultActions resultActions = mockMvc.perform(post("/admin/users/signup")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(objectMapper.writeValueAsString(requestDto))
+        );
+
+        resultActions.andDo(print())
+            .andExpect(status().isBadRequest())
+            .andExpect(jsonPath("error.code").value("INVALID_ADMIN_PIN"))
+            .andExpect(jsonPath("error.message").value("관리자 PIN 번호가 일치하지 않습니다."));
+    }
+
+    @Test
+    @DisplayName("관리자 회원가입 테스트 : PIN Null 실패")
+    void signupAdminTestNullFail() throws Exception {
+        AdminSignupRequestDto requestDto = AdminSignupRequestDto.of(
+            "testAdminUsername1",
+            "testAdminPassword",
+            "testAdminNickname",
+            null
+        );
+
+        ResultActions resultActions = mockMvc.perform(post("/admin/users/signup")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(objectMapper.writeValueAsString(requestDto))
+        );
+
+        resultActions.andDo(print())
+            .andExpect(status().isBadRequest())
+            .andExpect(jsonPath("error.code").value("ADMIN_PIN_NULL"))
+            .andExpect(jsonPath("error.message").value("관리자 PIN 번호가 없거나 NULL 입니다."));
     }
 
     @Test
