@@ -19,3 +19,15 @@ spring:
     username: ${TEST_DB_USER}
     password: ${TEST_DB_PASSWORD}
     url: ${TEST_DB_URL}
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: prod
+  datasource:
+    driver-class-name: ${PROD_DB_DRIVER}
+    username: ${PROD_DB_USER}
+    password: ${PROD_DB_PASSWORD}
+    url: ${PROD_DB_URL}
