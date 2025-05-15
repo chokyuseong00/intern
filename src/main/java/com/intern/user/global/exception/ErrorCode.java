@@ -11,7 +11,11 @@ public enum ErrorCode {
     INVALID_CREDENTIALS(HttpStatus.UNAUTHORIZED, "아이디 또는 비밀번호가 올바르지 않습니다."),
     UNAUTHORIZED_ACCESS(HttpStatus.UNAUTHORIZED, "권한이 없습니다."),
     ADMIN_PIN_NULL(HttpStatus.BAD_REQUEST, "관리자 PIN 번호가 없거나 NULL 입니다."),
-    INVALID_ADMIN_PIN(HttpStatus.BAD_REQUEST, "관리자 PIN 번호가 일치하지 않습니다.");
+    INVALID_ADMIN_PIN(HttpStatus.BAD_REQUEST, "관리자 PIN 번호가 일치하지 않습니다."),
+    USERNAME_INVALID(HttpStatus.BAD_REQUEST, "username이 비어있거나 형식에 맞지 않습니다."),
+    PASSWORD_INVALID(HttpStatus.BAD_REQUEST, "password가 비어있거나 형식에 맞지 않습니다."),
+    NICKNAME_INVALID(HttpStatus.BAD_REQUEST, "nickname이 비어있거나 형식에 맞지 않습니다."),
+    ;
 
     private final HttpStatus httpStatus;
 

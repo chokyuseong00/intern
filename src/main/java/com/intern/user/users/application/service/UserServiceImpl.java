@@ -32,6 +32,7 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public UserSignupResponseDto signupUser(UserSignupRequestDto requestDto) {
         userValidator.usernameValidate(requestDto.getUsername());
+        userValidator.signupValidate(requestDto);
         User user = UserMapper.toUser(requestDto);
         userRepository.save(user);
         return UserMapper.toSignupResDto(user);
@@ -39,6 +40,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserLoginResponseDto loginUser(UserLoginRequestDto requestDto) {
+        userValidator.loginValidator(requestDto);
         User user = userRepository.findByUsername(requestDto.getUsername());
         PasswordUtil.isMatched(requestDto.getPassword(), user.getPassword());
         String accessToken = jwtService.createAccessToken(user);
@@ -57,12 +59,11 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public AdminSignupResponseDto signupAdmin(AdminSignupRequestDto requestDto) {
         userValidator.usernameValidate(requestDto.getUsername());
-        adminValidator.checkPin(requestDto.getAdminPin());
+        adminValidator.adminSignupValidate(requestDto);
         User admin = UserMapper.toAdmin(requestDto);
         admin.updateRole(UserRole.ADMIN);
         userRepository.save(admin);
         return UserMapper.toSignupAdminResDto(admin);
     }
-
 
 }
