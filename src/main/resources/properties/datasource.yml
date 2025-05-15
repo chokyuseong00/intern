@@ -1,0 +1,33 @@
+spring:
+  config:
+    activate:
+      on-profile: local
+  datasource:
+    driver-class-name: org.h2.Driver
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
+    url: ${DB_URL}
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: test
+  datasource:
+    driver-class-name: org.h2.Driver
+    username: ${TEST_DB_USER}
+    password: ${TEST_DB_PASSWORD}
+    url: ${TEST_DB_URL}
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: prod
+  datasource:
+    driver-class-name: ${PROD_DB_DRIVER}
+    username: ${PROD_DB_USER}
+    password: ${PROD_DB_PASSWORD}
+    url: ${PROD_DB_URL}
