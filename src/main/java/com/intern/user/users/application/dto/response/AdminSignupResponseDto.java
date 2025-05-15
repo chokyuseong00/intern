@@ -1,6 +1,7 @@
 package com.intern.user.users.application.dto.response;
 
 import com.intern.user.users.domain.model.UserRole;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 
 @Getter
@@ -8,6 +9,7 @@ public class AdminSignupResponseDto {
 
     private final String username;
     private final String nickname;
+    @Schema(example = "ADMIN")
     private final UserRole role;
 
     private AdminSignupResponseDto(
