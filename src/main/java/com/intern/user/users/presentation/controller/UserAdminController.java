@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import java.net.URI;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -46,7 +47,11 @@ public class UserAdminController {
         return ResponseEntity.created(uri).body(responseDto);
     }
 
-    @Operation(summary = "관리자 권한 부여", description = "관리자 권한 부여 API 입니다. 관리자 권한을 가진 사용자만 접근할 수 있습니다.")
+    @Operation(
+        summary = "관리자 권한 부여",
+        description = "관리자 권한 부여 API 입니다. 관리자 권한을 가진 사용자만 접근할 수 있습니다.",
+        security = @SecurityRequirement(name = "bearerAuth")
+    )
     @PatchMapping("/admin/users/{userId}/roles")
     public ResponseEntity<AdminRoleUpdateResponseDto> updateRole(
         @PathVariable(name = "userId") Long userId
