@@ -6,21 +6,21 @@ Java 직무 과제
 
 ## Swagger UI 주소
 
-- http://15.164.94.191:8080/swagger-ui/index.html
+- http://54.180.96.20:8080/swagger-ui/index.html
 
 ---
 
 ## AWS EC2에서 실행중인 API의 엔드포인트 URL
 
 - 일반 사용자 회원가입
-    - http://15.164.94.191:8080/signup
+    - http://54.180.96.20:8080/signup
 - 관리자 회원가입
     - 관리자 회원가입용 PIN 번호 : admin1234
-    - http://15.164.94.191:8080/admin/users/signup
+    - http://54.180.96.20:8080/admin/users/signup
 - 로그인
-    - http://15.164.94.191:8080/login
+    - http://54.180.96.20:8080/login
 - 관리자 권한 부여
-    - http://15.164.94.191:8080/admin/users/{userId}/roles
+    - http://54.180.96.20:8080/admin/users/{userId}/roles
 
 ---
 
